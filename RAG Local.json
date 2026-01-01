@@ -14,8 +14,7 @@
         -112
       ],
       "id": "2ddc7272-49f5-4f19-a0bb-25bfefe009d7",
-      "name": "When chat message received",
-      "webhookId": "eab21518-c6e9-4487-9568-146d9f483a65"
+      "name": "When chat message received"
     },
     {
       "parameters": {
@@ -35,13 +34,7 @@
       ],
       "id": "1db4c332-6056-488a-a00c-d3b2a1649355",
       "name": "Qdrant Vector Store",
-      "notesInFlow": false,
-      "credentials": {
-        "qdrantApi": {
-          "id": "sFfERYppMeBnFNeA",
-          "name": "Local QdrantApi database"
-        }
-      }
+      "notesInFlow": false
     },
     {
       "parameters": {
@@ -54,13 +47,7 @@
         112
       ],
       "id": "9ae05d97-75aa-4c64-9fe5-b29abe5f7511",
-      "name": "Embeddings Ollama",
-      "credentials": {
-        "ollamaApi": {
-          "id": "xHuYe0MDGOs9IpBW",
-          "name": "Local Ollama service"
-        }
-      }
+      "name": "Embeddings Ollama"
     },
     {
       "parameters": {
@@ -106,13 +93,7 @@
         64
       ],
       "id": "a4c34a5a-cc7c-47eb-867f-45db615baf64",
-      "name": "Ollama Chat Model",
-      "credentials": {
-        "ollamaApi": {
-          "id": "xHuYe0MDGOs9IpBW",
-          "name": "Local Ollama service"
-        }
-      }
+      "name": "Ollama Chat Model"
     },
     {
       "parameters": {
@@ -157,13 +138,7 @@
         368
       ],
       "id": "f684e381-3803-474d-bd04-8bd9f923dd4e",
-      "name": "Qdrant Vector Store1",
-      "credentials": {
-        "qdrantApi": {
-          "id": "sFfERYppMeBnFNeA",
-          "name": "Local QdrantApi database"
-        }
-      }
+      "name": "Qdrant Vector Store1"
     },
     {
       "parameters": {
@@ -179,13 +154,7 @@
         240
       ],
       "id": "e73614f3-ed67-4806-879b-38fab1280224",
-      "name": "Ollama Model",
-      "credentials": {
-        "ollamaApi": {
-          "id": "xHuYe0MDGOs9IpBW",
-          "name": "Local Ollama service"
-        }
-      }
+      "name": "Ollama Model"
     },
     {
       "parameters": {
@@ -198,13 +167,7 @@
         512
       ],
       "id": "1e01c041-fac4-497a-ba90-e3000b5813ce",
-      "name": "Embeddings Ollama1",
-      "credentials": {
-        "ollamaApi": {
-          "id": "xHuYe0MDGOs9IpBW",
-          "name": "Local Ollama service"
-        }
-      }
+      "name": "Embeddings Ollama1"
     },
     {
       "parameters": {
@@ -268,13 +231,7 @@
         304
       ],
       "id": "e0c3153b-731f-4fe9-bc6c-122469560edf",
-      "name": "Ollama Chat Model1",
-      "credentials": {
-        "ollamaApi": {
-          "id": "xHuYe0MDGOs9IpBW",
-          "name": "Local Ollama service"
-        }
-      }
+      "name": "Ollama Chat Model1"
     },
     {
       "parameters": {},
@@ -316,13 +273,7 @@
         784
       ],
       "id": "579092a1-1446-4f60-86b3-559b37d524d9",
-      "name": "Qdrant Vector Store2",
-      "credentials": {
-        "qdrantApi": {
-          "id": "sFfERYppMeBnFNeA",
-          "name": "Local QdrantApi database"
-        }
-      }
+      "name": "Qdrant Vector Store2"
     },
     {
       "parameters": {
@@ -338,13 +289,7 @@
         656
       ],
       "id": "b03c234e-888a-475e-a5df-b877c17fa04a",
-      "name": "Ollama Model1",
-      "credentials": {
-        "ollamaApi": {
-          "id": "xHuYe0MDGOs9IpBW",
-          "name": "Local Ollama service"
-        }
-      }
+      "name": "Ollama Model1"
     },
     {
       "parameters": {
@@ -357,13 +302,7 @@
         928
       ],
       "id": "e815f38f-6504-48be-be5d-7931cd6f662f",
-      "name": "Embeddings Ollama2",
-      "credentials": {
-        "ollamaApi": {
-          "id": "xHuYe0MDGOs9IpBW",
-          "name": "Local Ollama service"
-        }
-      }
+      "name": "Embeddings Ollama2"
     }
   ],
   "pinData": {},
@@ -568,10 +507,8 @@
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "dbf7368c-df51-4893-8d9d-fedafc1da10d",
   "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "558d88703fb65b2d0e44613bc35916258b0f0bf983c5d4730c00c424b77ca36a"
+    "templateCredsSetupCompleted": true
   },
   "id": "SHeVFw1I64yf9wqk",
   "tags": []

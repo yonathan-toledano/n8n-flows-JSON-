@@ -82,13 +82,7 @@
         448
       ],
       "id": "8ab0bc5a-e9da-40c1-a71f-4de5f8c0e11e",
-      "name": "OpenAI Chat Model",
-      "credentials": {
-        "openAiApi": {
-          "id": "3qsio9e6Zh1niopM",
-          "name": "OpenAi account"
-        }
-      }
+      "name": "OpenAI Chat Model"
     },
     {
       "parameters": {
@@ -140,13 +134,7 @@
       ],
       "id": "58f46e31-f8fb-41a2-8d1e-5112145e6d46",
       "name": "Send message and wait for response",
-      "webhookId": "c7048371-077d-4cbf-864a-4a0aa185e853",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "Bx2U3AMp6OdlMRx6",
-          "name": "WhatsApp account"
-        }
-      }
+      "webhookId": "c7048371-077d-4cbf-864a-4a0aa185e853"
     },
     {
       "parameters": {
@@ -196,13 +184,7 @@
       ],
       "id": "0e33a7f6-c529-4ea3-86c5-96b09271922b",
       "name": "Send a message",
-      "webhookId": "b40fbd11-aeae-4994-8d20-2f6a1f159fc0",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "XhHjsFDia9Qm5x9A",
-          "name": "Gmail account"
-        }
-      }
+      "webhookId": "b40fbd11-aeae-4994-8d20-2f6a1f159fc0"
     },
     {
       "parameters": {
@@ -234,13 +216,7 @@
       ],
       "id": "a6153a18-3b12-43dd-a9dd-ddc35776272a",
       "name": "Send message and wait for response1",
-      "webhookId": "a6e07349-7f53-4a99-8296-c1f4aeb72080",
-      "credentials": {
-        "whatsAppApi": {
-          "id": "Bx2U3AMp6OdlMRx6",
-          "name": "WhatsApp account"
-        }
-      }
+      "webhookId": "a6e07349-7f53-4a99-8296-c1f4aeb72080"
     },
     {
       "parameters": {

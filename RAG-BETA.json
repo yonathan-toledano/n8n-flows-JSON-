@@ -1,0 +1,469 @@
+{
+  "name": "RAG",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "rag",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -32,
+        -16
+      ],
+      "id": "098b39f0-31d3-48fb-a664-3fbb43eaf29c",
+      "name": "Webhook",
+      "webhookId": "d23f64aa-b6eb-429d-aed3-f1789092a576"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "rag",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -32,
+        192
+      ],
+      "id": "3c7be872-6296-4996-87f8-69a3bda4cf6b",
+      "name": "Webhook1",
+      "webhookId": "222a6efa-ede1-44cb-bbcf-d6f9237e9fe4"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.query['hub.challenge'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        272,
+        -16
+      ],
+      "id": "aaea9783-b76d-435f-a451-82b06f5dccd6",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=שאלת המשתמש: {{ $('Webhook1').item.json.body.entry[0].changes[0].value.messages[0].text.body }}\nתשובת המערכת:{{ $json.message.content }}",
+        "options": {
+          "systemMessage": "=אתה סוכן חכם.\nענה בקצרה ולעניין.\n\nאם התקבלה תשובה מנומקת לשאלת המשתמש על ידי המערכת תשיב למשתמש את תשובת המערכת\nאם לא נמצאה תשובה, דלג על השימוש במידע מהמאגר והמשך בזרימה הרגילה.\nאם אין מידע במערכת, תפנה לציג אנושי כמפורט בהמשך\n\nאין להמציא מידע ואין להסתמך על ידע פנימי.\n\nאם במהלך השיחה אתה מזהה תסכול מצד המשתמש או שלא התקבלה תשובה טובה וברורה לאחר מענה המערכת, הסבר למשתמש שהוא יכול להקליד בדיוק את הביטוי \"סיוע אנושי\" כדי לפתוח קריאת שירות.\n\nאם הקלט שהתקבל הוא בדיוק \"סיוע אנושי\"\nבצורה מדויקת לחלוטין, ללא תו אחד נוסף או חסר\nעליך להשתמש בזיכרון הפשוט שהוקצה לך ולהחזיר פלט של סיכום כל השיחות שהתקיימו עם אותו משתמש.\n\nאם המשתמש הקליד טקסט שכולל את הביטוי \"סיוע אנושי\" אך עם תו אחד נוסף, חסר או שינוי כלשהו\nהסבר לו שעליו להקליד רק \"סיוע אנושי\" בדיוק כפי שהוא מופיע.\n\nהשתמש במזהה הבא כדי להבחין בין משתמשים שונים, לכל משתמש מספר ייחודי משלו:\n{{ $('Filter').item.json.headers }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        800,
+        192
+      ],
+      "id": "59f27f0b-9e06-4b92-a7d9-a49684e1db27",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        720,
+        448
+      ],
+      "id": "8ab0bc5a-e9da-40c1-a71f-4de5f8c0e11e",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "3qsio9e6Zh1niopM",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "4e548fcb-06ed-4f86-919d-5faa7f86a477",
+              "leftValue": "={{ $json.body.entry[0].changes[0].value.messages[0].text.body }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        256,
+        192
+      ],
+      "id": "84053916-ad4d-45d0-b2cd-24ab7888843b",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "861233217076700",
+        "recipientPhoneNumber": "={{ $('Filter').item.json.body.entry[0].changes[0].value.messages[0].from }}",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        1488,
+        368
+      ],
+      "id": "58f46e31-f8fb-41a2-8d1e-5112145e6d46",
+      "name": "Send message and wait for response",
+      "webhookId": "c7048371-077d-4cbf-864a-4a0aa185e853",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "Bx2U3AMp6OdlMRx6",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "0b0fbd24-ef98-44bf-87b9-c18b9157ae54",
+              "leftValue": "={{ $('Filter').item.json.body.entry[0].changes[0].value.messages[0].text.body }}",
+              "rightValue": "סיוע אנושי",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1152,
+        192
+      ],
+      "id": "5d6a1642-da44-4a21-aecc-071bc0be6b06",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "yonathan.toledano@gmail.com",
+        "subject": "משתמש זקוק למענה אנושי",
+        "message": "={{ $('AI Agent').item.json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1920,
+        224
+      ],
+      "id": "0e33a7f6-c529-4ea3-86c5-96b09271922b",
+      "name": "Send a message",
+      "webhookId": "b40fbd11-aeae-4994-8d20-2f6a1f159fc0",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "XhHjsFDia9Qm5x9A",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook1').item.json.headers }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        896,
+        448
+      ],
+      "id": "61a7bc1c-fea8-4527-897e-acaed46dc46b",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "861233217076700",
+        "recipientPhoneNumber": "={{ $('Filter').item.json.body.entry[0].changes[0].value.messages[0].from }}",
+        "textBody": "נציג יצור איתך קשר בהקדם האפשרי, תודה על הסבלנות :)",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        1488,
+        96
+      ],
+      "id": "a6153a18-3b12-43dd-a9dd-ddc35776272a",
+      "name": "Send message and wait for response1",
+      "webhookId": "a6e07349-7f53-4a99-8296-c1f4aeb72080",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "Bx2U3AMp6OdlMRx6",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://prod-1-data.ke.pinecone.io/assistant/chat/test-rag",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Api-Key",
+              "value": "pcsk_6MMmiB_7ucvZJCx5Hgjfg2HefrEQfwt1Cp2XH8BhR88GvNH6R2pWCEAjkHvywtzCHRZZ6i"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"{{ $json.body.entry[0].changes[0].value.messages[0].text.body }}\"\n    }\n  ],\n  \"stream\": false,\n  \"model\": \"gpt-4o\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        592,
+        192
+      ],
+      "id": "27ffffdf-bc47-4a86-b55c-ae801f6e3a8a",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {
+    "Webhook1": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8njt.bilbeo.org",
+            "user-agent": "facebookexternalua",
+            "content-length": "650",
+            "accept": "*/*",
+            "accept-encoding": "gzip, br",
+            "cdn-loop": "cloudflare; loops=1",
+            "cf-connecting-ip": "2a03:2880:22ff:4e::",
+            "cf-ipcountry": "US",
+            "cf-ray": "9b404e084eb22894-IAD",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "cf-warp-tag-id": "33e03d79-d756-42a5-8c6c-d88eb31caaeb",
+            "content-type": "application/json",
+            "x-forwarded-for": "172.232.34.111",
+            "x-forwarded-host": "n8njt.bilbeo.org",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "9fcbba10482e",
+            "x-hub-signature": "sha1=fc7196fe683af5deb87c16e05c2f4ebe9542b20c",
+            "x-hub-signature-256": "sha256=529e75cbcf5e24537bcf9e05de4d8900f3b037f104ffbb83012688a148fcb732",
+            "x-real-ip": "172.232.34.111"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "object": "whatsapp_business_account",
+            "entry": [
+              {
+                "id": "1363632331974392",
+                "changes": [
+                  {
+                    "value": {
+                      "messaging_product": "whatsapp",
+                      "metadata": {
+                        "display_phone_number": "972512066410",
+                        "phone_number_id": "861233217076700"
+                      },
+                      "contacts": [
+                        {
+                          "profile": {
+                            "name": "Yonathan Toledano"
+                          },
+                          "wa_id": "972522233566"
+                        }
+                      ],
+                      "messages": [
+                        {
+                          "from": "972522233566",
+                          "id": "wamid.HBgMOTcyNTIyMjMzNTY2FQIAEhgUM0FCQTMxRTc0OThBMDc0NDcyM0MA",
+                          "timestamp": "1766749240",
+                          "text": {
+                            "body": "איך מוצע להעביר הוראות אפקטיביות?"
+                          },
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "field": "messages"
+                  }
+                ]
+              }
+            ]
+          },
+          "webhookUrl": "https://n8njt.bilbeo.org/webhook/rag",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send message and wait for response1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send message and wait for response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send message and wait for response1": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "f89d1492-b2b6-48d9-b76b-42c087e31f8d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7b0c83954c86e30b172d00e6ff4a3dc498599be8fcf38173d24dd71774d2aeb8"
+  },
+  "id": "obxqYptSS4yHIKml",
+  "tags": []
+}

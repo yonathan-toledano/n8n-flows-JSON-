@@ -66,6 +66,8 @@ This repository shows that it is possible to build end to end AI powered automat
 • Practical n8n architecture patterns
 • Free and self hosted AI systems
 
+# 👤 Author
+Yonathan Toledano GitHub: https://github.com/yonathan-toledano using n8n
 # Notes
 
 • All workflows are provided as JSON exports
